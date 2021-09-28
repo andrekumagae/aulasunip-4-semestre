@@ -189,3 +189,42 @@ SELECT PROD_ID, PROD_NOME, VINHO_ID, VINHO_NOME FROM PRODUTOR P LEFT JOIN VINHO 
 #33. Mostrar o id do produtor, nome do produtor, id do vinho e nome do vinho para os vinhos dos 
 #produtores, inclusive os vinhos que não tiverem produtor.
 SELECT PROD_ID, PROD_NOME, VINHO_ID, VINHO_NOME FROM PRODUTOR P RIGHT JOIN VINHO V ON P.PROD_ID = V.VINHO_PROD_ID;
+
+#AULA 6
+
+CREATE DATABASE ESTOQUE;
+USE ESTOQUE;
+
+CREATE TABLE PRODUTOS 
+(CodProd  int  unsigned not null,
+NomeProd varChar(35), 
+CategoriaProd varChar(20),
+PrecoUnitProd decimal(7,2),
+Primary Key(CodProd)) Engine=InnoDB;
+
+Delimiter |
+CREATE PROCEDURE InsereProduto
+(cod int, nome varChar(35), Cat varChar(20),   
+preco decimal(7,2))
+Begin
+INSERT INTO PRODUTOS VALUES
+(cod, nome, cat, preco); 
+End
+|
+Delimiter ;
+
+
+show procedure status;
+
+CALL InsereProduto(1025, "Rebimbola Piriri", "Unidade", 35.50);
+
+SELECT * FROM PRODUTOS;
+
+Delimiter |
+CREATE PROCEDURE ListaProduto (preco decimal(7,2))
+Begin
+SELECT codProd, nomeProd, precoUnitProd FROM PRODUTOS WHERE PRECOUNITPROD > PRECO;
+End | Delimiter ;
+
+
+
