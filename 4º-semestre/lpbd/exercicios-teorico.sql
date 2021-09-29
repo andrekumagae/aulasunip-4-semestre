@@ -108,3 +108,63 @@ SELECT * FROM FUNC WHERE NOMEFUNC LIKE "M%" OR NOMEFUNC LIKE "P%";
 SELECT AVG(SALFUNC) AS MEDIA_SALARIOS FROM FUNC;
 #ARREDONDAR EM 2 CASAS
 SELECT ROUND(AVG(SALFUNC),2) AS MEDIA_SALARIOS FROM FUNC;
+
+########### AULA 05 ###########
+
+#1. Criar o Banco de Dados: 
+CREATE DATABASE ORGANIZACAO;
+
+#2. Abrir o Banco de Dados:
+USE ORGANIZACAO;
+
+#3. Criar a tabela Depto:
+CREATE TABLE DEPTO(
+CODDEP INT(2) unsigned not null,
+NOMEDEP varchar(25),
+QUANTDEP int(2),
+primary key(CODDEP)
+);
+
+#4. Criar a tabela Func:
+CREATE TABLE FUNC          
+(identFunc int(2) unsigned not null,     
+nomeFunc   char(40),
+funcaoFunc char(20), dtadFunc  date,
+salFunc  decimal(7,2),  
+comisFunc  decimal(7,2),  
+codDepFunc   int(2), 
+PRIMARY KEY(identFunc));
+
+#5. Inserir dados na tabela Depto:
+INSERT INTO Depto VALUES
+(10,"Diretoria",5), (13, "Marketing", 18),(16, "Financeiro", 23),
+(17, "Producao", 109),(14, "Pessoal", 11), (15, "Vendas", 9),   
+(12, "Compras",22),(11,  "Suprimento",8),(18, "Estoque",7);
+
+#6. Inserir dados na tabela Func:
+INSERT INTO Func VALUES
+(1,"Jose","Analista","1994-10-04",2100,500,12),  
+(2,"Paulo","Pintor","1995-10-10",960,0,13), 
+(3,"Rocha","Funileiro","2000-01-07",1300,0,13),    
+(4,"Maria","Vendedor","1999-05-04",1800,2400,15),     
+(5,"Neide","Analista","2000-12-10",2500,750,17),
+(6,"Irma","Vendedor","2000-09-09",1200,3300,15),
+(7,"Fabio","Presidente","1986-01-07",15000,2300,10);
+
+#7.Listar os dados da tabela: Depto:
+SELECT * FROM DEPTO;
+
+#8. Listar os dados da tabela: Func:
+SELECT * FROM FUNC;
+
+#9. Listar a identificação e o nome dos empregados cadastrados.
+SELECT IDENTFUNC, NOMEFUNC FROM FUNC;
+
+#10. Listar a identificação, nome, salário e o código do departamento dos empregados que são vendedores.
+SELECT IDENTFUNC, NOMEFUNC, SALFUNC, CODDEPFUNC FROM FUNC WHERE FUNCAOFUNC = "Vendedor";
+
+#11. Listar o nome e o salário dos empregados que têm salário entre 1500 e 2600.
+SELECT NOMEFUNC, SALFUNC FROM FUNC WHERE SALFUNC > 1500 AND SALFUNC < 2600;
+
+#12. Alterar na tabela Func a Comissão do Pintor para 100.00.
+UPDATE FUNC SET COMISFUNC = 100.00 WHERE FUNCAOFUNC = "Pintor";
