@@ -6,7 +6,7 @@ public class Conector {
 
     public static Connection conector() {
         Connection conexao = null;
-        String url = "jdbc:mysql://localhost:3306/petshop";
+        String url = "jdbc:mysql://localhost:3306/vinicula";
         String usuario = "root";
         String senha = "";
 

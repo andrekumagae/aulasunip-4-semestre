@@ -168,3 +168,7 @@ SELECT NOMEFUNC, SALFUNC FROM FUNC WHERE SALFUNC > 1500 AND SALFUNC < 2600;
 
 #12. Alterar na tabela Func a Comissão do Pintor para 100.00.
 UPDATE FUNC SET COMISFUNC = 100.00 WHERE FUNCAOFUNC = "Pintor";
+
+#13. Listar o nome dos empregados, a função e o nome do departamento.
+
+
