@@ -12,6 +12,10 @@
 
 [Aula 05](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/netbeans/src/com/slides/aula05)
 
+[Aula 06](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/netbeans/src/com/slides/aula06)
+
+[Aula 07](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/netbeans/src/com/slides/aula07)
+
 ### Intellij
 
 [Aula 01](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/intellij/src/com/slides/aula01)
@@ -23,4 +27,3 @@
 [Aula 04](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/intellij/src/com/slides/aula04)
 
 [Aula 05](https://github.com/andrekumagae/repositorio-das-aulas-unip/tree/main/4º-semestre/alpoo/intellij/src/com/slides/aula05)
-
