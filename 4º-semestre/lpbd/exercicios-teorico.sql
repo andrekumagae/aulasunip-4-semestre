@@ -170,5 +170,35 @@ SELECT NOMEFUNC, SALFUNC FROM FUNC WHERE SALFUNC > 1500 AND SALFUNC < 2600;
 UPDATE FUNC SET COMISFUNC = 100.00 WHERE FUNCAOFUNC = "Pintor";
 
 #13. Listar o nome dos empregados, a função e o nome do departamento.
+SELECT NOMEFUNC, FUNCAOFUNC, NOMEDEP FROM FUNC JOIN DEPTO ON CODDEPFUNC = CODDEP;
+
+#14. Listar o nome dos empregados, a função e o salário dos empregados do depto: Produção.
+SELECT NOMEFUNC, FUNCAOFUNC, SALFUNC FROM FUNC JOIN DEPTO ON CODDEPFUNC = CODDEP
+WHERE NOMEDEP = "Producao";
+#Ou
+SELECT NOMEFUNC, FUNCAOFUNC, SALFUNC FROM FUNC WHERE CODDEPFUNC = 17;
+
+#15. Aumentar o salário dos funcionários do depto de Vendas em 20%.
+UPDATE FUNC JOIN DEPTO ON CODDEPFUNC = CODDEP SET SALFUNC = SALFUNC * 1.2 WHERE NOMEDEP = "Vendas";
+#OU
+UPDATE FUNC SET SALFUNC = SALFUNC * 1.2 WHERE CODDEPFUNC = 15;
+SELECT * FROM FUNC;
+
+
+#16. Aumentar o salário dos funcionários do depto de Marketing, em 10%, 
+#para os funcionários que ganham, com salario e comissão menos de 1200.00.
+UPDATE FUNC JOIN DEPTO ON CODDEPFUNC = CODDEP SET SALFUNC = SALFUNC * 1.1 WHERE NOMEDEP = "Marketing"
+AND (SALFUNC + COMISFUNC) < 1200.00;
+#OU
+UPDATE FUNC SET SALFUNC = SALFUNC * 1.1 WHERE CODDEPFUNC = 13 AND  (SALFUNC + COMISFUNC) < 1200.00;
+SELECT * FROM FUNC;
+
+
+
+
+
+
+
+
 
 
