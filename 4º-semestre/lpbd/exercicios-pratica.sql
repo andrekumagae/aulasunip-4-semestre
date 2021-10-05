@@ -1,3 +1,234 @@
+########### AULA 01 ###########
+
+#EXERCÍCIO DATABASE ESCOLA
+
+#Criação do BD.
+CREATE DATABASE ESCOLA;
+DROP DATABASE ESCOLA;
+
+#Para abrir o banco de Dados:
+USE ESCOLA;
+
+#Para ver se o BD foi criado:
+SHOW DATABASES;
+
+#Criação da tabela Aluno.
+CREATE  TABLE  Alunos(
+Matricula int(2) unsigned not null,
+Nome varChar(40),
+Sexo varChar(01),
+Endereco varChar(13),
+PRIMARY KEY(Matricula)); 
+
+#Para ver se a tabela foi criada
+SHOW TABLES;
+
+#Para ver as características da tabela.      
+DESC ALUNOS;
+DESCRIBE ALUNOS;
+
+#Inserindo dados na tabela
+INSERT INTO  Alunos  VALUES
+(1,"Magnolia","F", "Rua A, 13"), 
+(2,"Epaminondas","M","Rua B, 14"),
+(3,"Raymunda","F","Rua C, 15"), 
+(4,"Emengarda","F","Rua D, 16"),
+(5,"Asdrubal","M","Rua E, 17"),
+(6, "Emilio", "M", "Rua F, 16"),
+(7, "Tiburcio", "M", "Rua G, 44");
+
+#1. Listar os dados dos alunos.
+SELECT * FROM ALUNOS;
+
+#2. Listar todas as matriculas e nomes dos alunos.
+SELECT MATRICULA, NOME FROM ALUNOS;
+
+#3. Listar todos os nomes e endereços dos alunos.
+SELECT NOME, ENDERECO FROM ALUNOS;
+
+#4. Listar matricula, endereço, sexo e nome dos alunos.
+SELECT NOME, ENDERECO, SEXO FROM ALUNOS;
+
+#5. Listar matricula, nome e endereço das alunas.
+SELECT MATRICULA, NOME FROM ALUNOS WHERE SEXO = 'F';
+
+#6. Listar todos alunos com matricula maior do que 3.
+SELECT * FROM ALUNOS WHERE MATRICULA > 3;
+
+#7. Listar os alunos cujo nome começa com a letra E.
+SELECT * FROM ALUNOS WHERE NOME LIKE "E%";
+
+#8. Alterar na tabela Aluno o Endereço para varChar(35). 
+ALTER TABLE ALUNOS MODIFY ENDERECO VARCHAR(35);
+
+#9. Incluir na tabela Aluno o Curso varchar(30) após o nome do aluno.
+ALTER TABLE ALUNOS ADD Curso VARCHAR(30) AFTER NOME;
+
+#10. Ver como ficaram os dados da tabela Aluno.
+SELECT * FROM ALUNOS;
+
+#11. Incluir na tabela Aluno a Mensalidade DECIMAL(7,2).
+ALTER TABLE ALUNOS ADD Mensalidade DECIMAL(7,2);
+#12. Para a Aluna Emengarda, alterar os dados da tabela aluno, colocando: Curso = Ciências da Computação e 
+#Mensalidade = 721.80.
+UPDATE ALUNOS SET CURSO = "Ciências da Computação", Mensalidade = 721.80 WHERE NOME = "Emengarda";
+
+#13. Listar os dados da tabela Aluno.
+SELECT * FROM ALUNOS;
+
+#14. Excluir os dados do Aluno Epaminondas.
+DELETE FROM ALUNOS WHERE NOME = "Epaminondas";
+
+#EXERCÍCIO DB AMBULATORIO
+
+#1. Criar o db e as tabelas
+
+CREATE DATABASE AMBULATORIO;
+
+USE AMBULATORIO;
+
+CREATE TABLE MEDICO
+(Id_Medico int(2)      not null,
+NomeMed        varChar(35) not null,
+Crm          varChar(15),
+Telefone   varChar(15),
+Primary Key(Id_Medico))
+Engine=InnoDB;
+
+CREATE TABLE PACIENTE
+  (Id_Paciente int(2)   not null,
+   NomePac        varChar(35) not null,
+   Convenio varChar(20),
+   Endereco varChar(40),
+   Primary Key(Id_Paciente))
+   Engine =InnoDB;
+
+CREATE TABLE CONSULTA
+  (Id_Medico   int(2)   not null, 
+   Id_Paciente int(2)   not null,
+   Data             date,
+   Hora             time,
+   Primary Key(Id_Medico,Id_Paciente))
+   Engine =InnoDB;
+
+DESC MEDICO;
+DESC PACIENTE;
+DESC CONSULTA;
+SHOW TABLES;
+
+#Criar a tabela Prontuario.
+
+CREATE TABLE PRONTUARIO
+(Id_Paciente      int(2)   not null,
+DataConsulta  date,
+HoraConsulta  time,
+id_Medico        int(2),
+ResConsulta varChar(256))
+Engine=InnoDB;
+
+#2. ALTERAR na tabela Prontuario a coluna NomePaciente para 40 posições.
+ALTER TABLE PACIENTE MODIFY NOME VARCHAR(40);
+
+#3. Inserir na tabela Prontuario a coluna EndPaciente char(40) após a coluna NomePaciente.
+ALTER TABLE PACIENTE ADD EndPaciente VARCHAR(40) AFTER NOME;
+
+#4. Incluir a chave primária Id_Paciente, DataConsulta e HoraConsulta na tabela Prontuário.
+ALTER TABLE PRONTUARIO ADD PRIMARY KEY(DataConsulta, HoraConsulta);
+
+#5. Inserir dados nas tabelas: Medico.
+
+INSERT INTO Medico VALUES
+(111, "Jose Dilva","1234567890","1111 11 11"),
+(112, "Maria Souza","0987654321","2222 22 22"),
+(113,"Ana Bastos","4567893210","3333 33 33"),
+(114,"Ari Santos","7894561230","4444 44 44"),
+(115,"Eva Brown","3216549879","5555 55 55");
+
+#6. Inserir dados nas tabelas: Paciente.
+ALTER TABLE PACIENTE DROP Endereco;
+INSERT INTO Paciente VALUES
+(1, "Epaminondas","Unimed","Rua A"),
+(2, "Asdrubal","Amico","Rua B"),
+(3,"Filisbina","Sulamerica","Rua C"),
+(4,"Gumercindo","Maritma","Rua D"),
+(5,"Cabrioca","Samaritano","Rua E");
+DROP TABLE PACIENTE;
+
+#7. Inserir dados nas tabelas: Consulta.
+
+INSERT INTO Consulta VALUES
+(114,3,"2009-08-01","10:05:00"),
+(111,1,"2009-08-01","09:00:00"),    
+(112,3,"2009-08-01","11:15:00"),
+(115,3,"2009-08-01","07:45:00"),
+(113,2,"2009-08-02","07:00:00"),
+(111,4,"2009-08-02","09:08:00"),
+(112,2,"2009-08-01","10:20:00"),
+(111,5,"2009-08-03","08:00:00"),
+(113,5,"2009-08-03","09:05:00"),
+(112,5,"2009-08-03","10:05:00");
+
+#8. Verificar os dados das tabelas.
+SELECT * FROM PACIENTE;
+SELECT * FROM MEDICO;
+SELECT * FROM CONSULTA;
+SELECT * FROM PRONTUARIO;
+
+#9. Criar a Visão MedPac, com o nome do médico, crm, nome do paciente e convenio. 
+CREATE VIEW CMedPac AS SELECT M.NOMEMED, CRM, P.NOMEPAC, CONVENIO FROM MEDICO M JOIN CONSULTA C
+ON M.ID_MEDICO = C.ID_MEDICO JOIN PACIENTE P ON C.ID_PACIENTE = P.ID_PACIENTE;
+
+#10. Na visão criada, listar o nome do médico e o nome do paciente.
+SELECT NOMEMED, NOMEPAC FROM CMEDPAC;
+
+#11. Alterar o nome do médico 111 para Jose Silva.
+UPDATE MEDICO SET NOMEMED = "Jose Silva" where ID_MEDICO = 111;
+
+#12. Executar novamente o exercício 10. VEJA QUE O NOME DO MÉDICO MUDOU.
+SELECT NOMEMED, NOMEPAC FROM CMEDPAC;
+
+#13. Alterar na tabela Medico, para a medica Ana Bastos o telefone 666 66 66.
+UPDATE MEDICO SET TELEFONE = "6666 66 66" WHERE ID_MEDICO = 113;
+SELECT * FROM MEDICO;
+
+#14. Mostrar os médicos que atenderam a paciente Filisbina.
+SELECT NOMEMED FROM CMEDPAC WHERE NOMEPAC = "Filisbina";
+
+#15. Mostrar os médicos que atenderam a paciente Filisbina.
+SELECT NOMEMED FROM CMEDPAC WHERE NOMEPAC = "Filisbina";
+
+#16. Mostrar os nomes e convenio dos pacientes que a médica Maria Souza atendeu.
+SELECT NOMEPAC, CONVENIO FROM CMEDPAC WHERE NOMEMED = "Maria Souza";
+
+#17. Mostrar os nomes e convenio dos pacientes que a médica Maria Souza atendeu.
+SELECT NOMEPAC, CONVENIO FROM CMEDPAC WHERE NOMEMED = "Maria Souza";
+
+#18. Inserir dados nas tabelas: Prontuario.
+INSERT INTO Prontuario VALUES
+(3,"2009-08-01","10:05:00",114,"Unha Encravada" ),
+(1,"2009-08-01","09:00:00",111,"Cirrose Biliar"),    
+(3,"2009-08-01","11:15:00",112,"Coração Partido"),
+(3,"2009-08-01","07:45:00",115, "Febre Alta"),
+(2,"2009-08-02","07:00:00",113,"Tosse Persistente"),
+(4,"2009-08-02","09:08:00",111,"Diarréia"),
+(2,"2009-08-01","10:20:00",112,"Dores Abdominais"),
+(5,"2009-08-03","08:00:00",111,"Sarampo"),
+(5,"2009-08-03","09:05:00",111,"Dor de Cabeça"),
+(5,"2009-08-03","10:05:00",112,"Catapóra");
+
+#19. Mostrar os nomes dos pacientes, nomes dos médicos, data, hora e resultado da consulta.
+SELECT P.NOMEPAC, M.NOMEMED, DATACONSULTA, HORACONSULTA, RESCONSULTA FROM PACIENTE P JOIN PRONTUARIO PR
+ON P.ID_PACIENTE = PR.ID_PACIENTE JOIN MEDICO M ON PR.ID_MEDICO = M.ID_MEDICO;
+
+#20. Excluir a tabela Prontuarios.
+DROP TABLE PRONTUARIO;
+
+#21. Excluir a visão MedPac.
+DROP VIEW CMEDPAC;
+
+#22. Excluir o Banco de Dados Ambulatorio. 
+DROP DATABASE AMBULATORIO;
+
 ########### AULA 05 ###########
 
 #01 - Criar e abrir o Banco de Dados Ensino.
@@ -225,6 +456,3 @@ CREATE PROCEDURE ListaProduto (preco decimal(7,2))
 Begin
 SELECT codProd, nomeProd, precoUnitProd FROM PRODUTOS WHERE PRECOUNITPROD > PRECO;
 End | Delimiter ;
-
-
-
