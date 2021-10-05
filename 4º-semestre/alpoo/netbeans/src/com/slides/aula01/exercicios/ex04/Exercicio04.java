@@ -5,11 +5,17 @@
  */
 package com.slides.aula01.exercicios.ex04;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
 /**
  *
  * @author andre
  */
-public class Exercicio04 extends javax.swing.JFrame {
+public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
+
+    static int numero1 = 0, numero2 = 0, igual, soma, subtracao, multiplicacao, divisao;
 
     /**
      * Creates new form Exercicio04
@@ -28,84 +34,163 @@ public class Exercicio04 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblNumeros = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
+        btn4 = new javax.swing.JButton();
+        btn5 = new javax.swing.JButton();
+        btn6 = new javax.swing.JButton();
+        btn7 = new javax.swing.JButton();
+        btn8 = new javax.swing.JButton();
+        btn9 = new javax.swing.JButton();
+        btn0 = new javax.swing.JButton();
+        btnSoma = new javax.swing.JButton();
+        btnSubtrai = new javax.swing.JButton();
+        btnMultiplica = new javax.swing.JButton();
+        btnDivide = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnIgual = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Calculadora");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(400, 400));
+        setMinimumSize(new java.awt.Dimension(400, 400));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabel1.setText("jLabel1");
-        jPanel1.add(jLabel1);
+        lblNumeros.setText("0");
+        jPanel1.add(lblNumeros);
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 4));
 
-        jButton3.setText("1");
-        jButton3.setOpaque(false);
-        jPanel2.add(jButton3);
+        btn1.setText("1");
+        btn1.setOpaque(false);
+        jPanel2.add(btn1);
 
-        jButton5.setText("2");
-        jPanel2.add(jButton5);
+        btn2.setText("2");
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn2);
 
-        jButton8.setText("3");
-        jPanel2.add(jButton8);
+        btn3.setText("3");
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn3);
 
-        jButton7.setText("4");
-        jPanel2.add(jButton7);
+        btn4.setText("4");
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn4);
 
-        jButton6.setText("5");
-        jPanel2.add(jButton6);
+        btn5.setText("5");
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn5);
 
-        jButton9.setText("6");
-        jPanel2.add(jButton9);
+        btn6.setText("6");
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn6ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn6);
 
-        jButton10.setText("7");
-        jPanel2.add(jButton10);
+        btn7.setText("7");
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn7);
 
-        jButton11.setText("8");
-        jPanel2.add(jButton11);
+        btn8.setText("8");
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn8ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn8);
 
-        jButton12.setText("9");
-        jPanel2.add(jButton12);
+        btn9.setText("9");
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn9);
 
-        jButton13.setText("0");
-        jPanel2.add(jButton13);
+        btn0.setText("0");
+        btn0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn0ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn0);
 
-        jButton14.setText("+");
-        jPanel2.add(jButton14);
+        btnSoma.setText("+");
+        btnSoma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSomaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSoma);
 
-        jButton15.setText("-");
-        jPanel2.add(jButton15);
+        btnSubtrai.setText("-");
+        btnSubtrai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubtraiActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSubtrai);
 
-        jButton16.setText("*");
-        jPanel2.add(jButton16);
+        btnMultiplica.setText("*");
+        btnMultiplica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMultiplicaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnMultiplica);
 
-        jButton17.setText("/");
-        jPanel2.add(jButton17);
+        btnDivide.setText("/");
+        btnDivide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDivideActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDivide);
 
-        jButton18.setText("C");
-        jPanel2.add(jButton18);
+        btnClear.setText("C");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnClear);
 
-        jButton19.setText("=");
-        jPanel2.add(jButton19);
+        btnIgual.setText("=");
+        btnIgual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIgualActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnIgual);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,6 +209,135 @@ public class Exercicio04 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton btn = (JButton) e.getSource();
+        String numero = btn.getText();
+        lblNumeros.setText(lblNumeros.getText() + numero);
+    }
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        lblNumeros.setText("0");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSomaActionPerformed
+        soma = numero1;
+        numero2 = 0;
+        lblNumeros.setText("0");
+    }//GEN-LAST:event_btnSomaActionPerformed
+
+    private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
+        if (soma == numero1) {
+            igual = numero1 + numero2;
+        } else if (subtracao == numero1) {
+            igual = numero1 - numero2;
+        } else if (multiplicacao == numero1) {
+            igual = numero1 * numero2;
+        } else {
+            igual = numero1 / numero2;
+        }
+        lblNumeros.setText(Integer.toString(igual));
+    }//GEN-LAST:event_btnIgualActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        lblNumeros.setText("2");
+        if (numero1 == 0) {
+            numero1 = 2;
+        } else {
+            numero2 = 2;
+        }
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        lblNumeros.setText("3");
+        if (numero1 == 0) {
+            numero1 = 3;
+        } else {
+            numero2 = 3;
+        }
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        lblNumeros.setText("4");
+        if (numero1 == 0) {
+            numero1 = 4;
+        } else {
+            numero2 = 4;
+        }
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        lblNumeros.setText("5");
+        if (numero1 == 0) {
+            numero1 = 5;
+        } else {
+            numero2 = 5;
+        }
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        lblNumeros.setText("6");
+        if (numero1 == 0) {
+            numero1 = 6;
+        } else {
+            numero2 = 6;
+        }
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        lblNumeros.setText("7");
+        if (numero1 == 0) {
+            numero1 = 7;
+        } else {
+            numero2 = 7;
+        }
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        lblNumeros.setText("8");
+        if (numero1 == 0) {
+            numero1 = 8;
+        } else {
+            numero2 = 8;
+        }
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        lblNumeros.setText("9");
+        if (numero1 == 0) {
+            numero1 = 9;
+        } else {
+            numero2 = 9;
+        }
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
+        lblNumeros.setText("0");
+        if (numero1 == 0) {
+            numero1 = 0;
+        } else {
+            numero2 = 0;
+        }
+    }//GEN-LAST:event_btn0ActionPerformed
+
+    private void btnSubtraiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtraiActionPerformed
+        subtracao = numero1;
+        numero2 = 0;
+        lblNumeros.setText("0");
+    }//GEN-LAST:event_btnSubtraiActionPerformed
+
+    private void btnMultiplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicaActionPerformed
+        multiplicacao = numero1;
+        numero2 = 0;
+        lblNumeros.setText("0");
+    }//GEN-LAST:event_btnMultiplicaActionPerformed
+
+    private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
+        divisao = numero1;
+        numero2 = 0;
+        lblNumeros.setText("0");
+    }//GEN-LAST:event_btnDivideActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,24 +375,24 @@ public class Exercicio04 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btn0;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
+    private javax.swing.JButton btn6;
+    private javax.swing.JButton btn7;
+    private javax.swing.JButton btn8;
+    private javax.swing.JButton btn9;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDivide;
+    private javax.swing.JButton btnIgual;
+    private javax.swing.JButton btnMultiplica;
+    private javax.swing.JButton btnSoma;
+    private javax.swing.JButton btnSubtrai;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblNumeros;
     // End of variables declaration//GEN-END:variables
 }
