@@ -229,6 +229,233 @@ DROP VIEW CMEDPAC;
 #22. Excluir o Banco de Dados Ambulatorio. 
 DROP DATABASE AMBULATORIO;
 
+########### AULA 02 ###########
+
+#1. Criar o BANCO DE DADOS: UNIVERSIDADE
+CREATE DATABASE UNIVERSIDADE;
+
+#2. Abrir o Banco de Dados  UNIVERSIDADE
+USE UNIVERSIDADE;
+
+#3. Criar a tabela Aluno
+CREATE TABLE ALUNO(
+Matricula int(2),
+Nome varchar(35),
+Media decimal(3,1)
+);
+
+#4. Mostrar as tabelas do Banco de Dados UNIVERSIDADE
+SHOW TABLES;
+
+#5. Mostrar a estrutura da tabela ALUNO
+DESC ALUNO;
+
+#6. Inserir os dados abaixo na tabela ALUNO.
+INSERT INTO ALUNO VALUES
+(1234, "Maria da Silva",8.2), (1231, "João da Silva",5.5),
+(1236, "Jose da Silva",10.0), (1237, "Ana da Silva",0.0),
+(1233, "Ari da Silva",7.0), (1230, "Benedita da Silva",8.2),
+(12381, "Asdrubal da Silva",5.5), (1232, "Filó da Silva",10.0),
+(1239, "José da Silva",0.0), (1235, "Alcinda da Silva",7.0);
+
+#7. Listar todos os dados dos Alunos.
+SELECT * FROM ALUNO;
+
+#8. Listar os Nomes e Médias dos Alunos
+SELECT NOME, MEDIA FROM ALUNO;
+
+#9. Listar os Nomes e Medias dos Alunos com média Maior do que 5.0.
+SELECT NOME, MEDIA FROM ALUNO WHERE MEDIA > 5.0;
+
+#10. Listar os dados dos Alunos cujas matrícula sejam maiores do que 1234 e menore do que 1237.
+SELECT * FROM ALUNO WHERE MATRICULA > 1234 AND MATRICULA < 1237;
+
+#11. Listar os Nomes e Médias dos Alunos com matrículas maiores do que 1235 e 
+#médias menores do que 5.0.
+SELECT NOME, MEDIA FROM ALUNO WHERE MATRICULA > 1235 AND MEDIA < 5.0;
+
+#12. Listar os Matricula e Nome dos Alunos aprovados (média igual ou maior do que 7.0).
+SELECT MATRICULA, NOME FROM ALUNO WHERE MEDIA >= 7.0;
+
+#13. Listar os dados do aluno Jose da Silva.
+SELECT * FROM ALUNO WHERE NOME = "Jose da Silva";
+
+#14. Listar os dados das alunas Maria da Silva e Ana da Silva.
+SELECT * FROM ALUNO WHERE NOME = "Maria da Silva" OR NOME="Ana da Silva";
+
+#15. Listar os dados dos alunos que estão de exame 
+#(notas maiores do que 3,0 e menores do que 7,0).. 
+SELECT * FROM ALUNO WHERE MEDIA > 3.0 AND MEDIA < 7.0;
+
+#16. Listar os Nome e medias dos alunos que não estão de exame 
+#(notas menores ou iguais a 3.0 e notas maiores ou iguais a 7.0).
+SELECT * FROM ALUNO WHERE MEDIA <= 3.0 OR MEDIA >= 7.0;
+
+#17. Listar os Nome e medias dos alunos que não estão de exame (notas menores ou iguaua a 3.0 e notas maiores ou iguais a 7.0).
+#Adaptei para alunos aprovados, pois este exercício é o mesmo que o 16
+SELECT * FROM ALUNO WHERE MEDIA >= 7.0;
+
+#18. Listar os dados dos alunos masculinos.
+SELECT * FROM ALUNO;
+ALTER TABLE ALUNO ADD Sexo varchar(1) AFTER MEDIA;
+UPDATE ALUNO SET SEXO='M' WHERE MATRICULA=1231 OR MATRICULA=1236 OR MATRICULA=1233 OR MATRICULA=12381
+OR MATRICULA=1239;
+UPDATE ALUNO SET SEXO='F' WHERE SEXO IS NULL;
+SELECT * FROM ALUNO WHERE SEXO = 'M';
+
+#Criar o Banco de Dados: Veiculo.
+CREATE DATABASE Veiculo;
+
+#2. Abrir o Banco de Dados Veiculo.
+USE Veiculo;
+
+#3. Criar a tabela: Automovel
+CREATE TABLE AUTOMOVEL(
+Placa varchar(8),
+Ano int(2),
+Modelo varchar(20),
+Preco decimal(7,2)
+);
+
+#4. Inserir dados na yabela Automovel.
+INSERT INTO Automovel VALUES
+("PXJ 5678",2012,"Gol",10000.00), 
+("DBM 2345",2014,"Corsa",10500.00),
+("KPT 1234",2015,"Tempra",15500.00),
+("PKT 9876",2018,"Santana",29800.00),
+("LKU 5432",2013,"Monza",24700.00),
+("JKY 1478",2016,"Corsa",28000.00),
+("MCU 4321",2012,"Fiorino",15000.00),
+("DQZ 8877",2018,"Corolla",31200.00),
+("DQR 6479",2019,"Santana",49600.00);
+
+#5. Mostrar os dados dos automóveis.
+SELECT * FROM AUTOMOVEL;
+
+#6. Mostrar os dados dos automóveis   classificados por modelo em ordem crescente.
+SELECT * FROM AUTOMOVEL ORDER BY MODELO ASC;
+
+#7. Mostrar os dados dos automóveis classificados por modelo em ordem crescente 
+#e por preço em orfem decrescente..
+SELECT * FROM AUTOMOVEL ORDER BY MODELO DESC, PRECO;
+
+#8. Liste as Placas, os Modelos, os Anos e os Preços dos automóveis
+#com preço menor do que R$ 20000.00.
+SELECT * FROM AUTOMOVEL WHERE PRECO < 20000.00;
+
+#9. Listar os dados dos automóveis.
+SELECT * FROM AUTOMOVEL;
+
+#10. Liste as Placas, os Modelos os Anos  os Preços e o 
+#NOVO_PRECO com um aumento de 15% dos autom com preço menor do que R$ 20000.00.
+SELECT PLACA, MODELO, ANO, PRECO, ROUND((PRECO * 1.15),2) AS NOVO_PRECO FROM AUTOMOVEL
+WHERE PRECO < 20000.00;
+
+#11. Listar os dados dos automóveis.
+SELECT * FROM AUTOMOVEL;
+
+#12. Alterar na tabela os preços dos automóveis em 15%, para os automóveis que custam 
+#menos de 20000.00.
+UPDATE AUTOMOVEL SET PRECO = PRECO * 1.15 WHERE PRECO < 20000.00;
+
+#13. Listar os dados dos automóveis.
+SELECT * FROM AUTOMOVEL;
+
+########### AULA 03 ###########
+
+#1. Criar o Banco de Dados Empregado.
+CREATE DATABASE EMPREGADO;
+
+#2. Abrir o Banco de Dados Empregado.
+USE EMPREGADO;
+
+#3. Criar e criar a tabela Func.
+CREATE TABLE Func
+(ID_FUNC int  UNSIGNED NOT NULL,
+NOME_FUNC varChar(40)  NOT NULL ,
+DEP_FUNC  int(2),
+PRIMARY KEY(ID_FUNC)) 
+ENGINE = InnoDB;
+
+#4. Inserir dados na tabela Func.
+INSERT INTO Func VALUES
+(123,"Alipio de Souza",18),
+(124,"Aparecido de Oliveira",16), 
+(125,"Joaninha Santos",11), 
+(126,"Carmelia Alves",18), 
+(127,"Adrualdo Macedo",14),
+(128,"Emengardo Silva",14), 
+(129,"Margarida Donald",16), 
+(130,"Raimundo Nonato",16), 
+(131,"Criselda Moreita",11), 
+(132,"Gumercindo Batista",14);
+
+#5. Copiar e criar a tabela Dependente com 
+CREATE TABLE Dependente
+(ID_DEPENDENTE int UNSIGNED NOT NULL,
+NOME_DEPENDENTE varChar(40) NOT NULL,
+DataNasc DATE,
+ID_FUNC int  UNSIGNED NOT NULL,
+PRIMARY KEY (ID_DEPENDENTE))
+ENGINE = InnoDB;
+
+#6. Inserir dados na tabela Dependente.
+INSERT INTO Dependente VALUES
+(11,"Aparecida","191-05-10",124), 
+(12,"Aparecidinho","2002-01-20",124), 
+(13,"Raimunda","1977-04-04",130), 
+(14,"Raimundinha","2003-06-30",130),    
+(15,"Raimundinho","2005-02-02",130), 
+(16,"Raimundeto","2007-04-04",130), 
+(17,"Emengarda","1986-01-10",128), 
+(18,"Emengardinha","1999-03-10",128), 
+(19,"Gumercindinha","2004-05-01",132), 
+(20,"Gumercindinho","2008-05-29",132), 
+(21,"Alipia","2007-02-11",123), 
+(22,"Epaminondinha","2007-03-13",123);
+
+#7. Listar os nomes dos Funcionários e seus dependentes, 
+#classificado por Nome do Funcionário em ordem ascendente.
+SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON
+F.ID_FUNC = D.ID_FUNC;
+
+#8. Excluir o funcionário 128 (Emengardo Silva).
+DELETE FROM FUNC WHERE ID_FUNC = 128;
+
+#9. Listar Nome do Funcionario e ver se o funcinario Emengardo Silva foi excluido.
+SELECT * FROM FUNC;
+
+#10. Listar Nome dos Dependentes e ver se os dependentes do Emengardo Silva estãao na tabela.
+SELECT NOME_DEPENDENTE FROM DEPENDENTE WHERE ID_FUNC=128;
+
+#11. Listar os nomes dos Funcionários  e seus dependentes.
+SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON
+F.ID_FUNC = D.ID_FUNC;
+
+#12. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai”.
+SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F RIGHT JOIN DEPENDENTE D ON
+F.ID_FUNC = D.ID_FUNC;
+
+#13. Inserir o dependente: (25,”Asdrubinha”,”2005-05-25”,135);
+INSERT INTO DEPENDENTE VALUES (25,"Asdrubinha","2005-05-25",135);
+
+#14. Listar os nomes dos dependentes, classificados em ordem ascendente, 
+#para ver se foi incluido.
+SELECT * FROM DEPENDENTE ORDER BY NOME_DEPENDENTE ASC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ########### AULA 05 ###########
 
 #01 - Criar e abrir o Banco de Dados Ensino.
@@ -421,7 +648,7 @@ SELECT PROD_ID, PROD_NOME, VINHO_ID, VINHO_NOME FROM PRODUTOR P LEFT JOIN VINHO 
 #produtores, inclusive os vinhos que não tiverem produtor.
 SELECT PROD_ID, PROD_NOME, VINHO_ID, VINHO_NOME FROM PRODUTOR P RIGHT JOIN VINHO V ON P.PROD_ID = V.VINHO_PROD_ID;
 
-#AULA 6
+########### AULA 06 ###########
 
 CREATE DATABASE ESTOQUE;
 USE ESTOQUE;
