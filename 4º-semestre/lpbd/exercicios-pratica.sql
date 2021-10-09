@@ -432,62 +432,286 @@ SELECT NOME_DEPENDENTE FROM DEPENDENTE WHERE ID_FUNC=128;
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON
 F.ID_FUNC = D.ID_FUNC;
 
-#12. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai”.
+#12. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai".
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F RIGHT JOIN DEPENDENTE D ON
 F.ID_FUNC = D.ID_FUNC;
 
-#13. Inserir o dependente: (25,”Asdrubinha”,”2005-05-25”,135);
+#13. Inserir o dependente: (25,"Asdrubinha","2005-05-25",135);
 INSERT INTO DEPENDENTE VALUES (25,"Asdrubinha","2005-05-25",135);
 
-#14. Listar os nomes dos dependentes, classificados em ordem ascendente, 
+#14. Listar os nomes dos dependents, classificados em ordem ascendente, para ver se foi incluido.
 #para ver se foi incluido.
 SELECT * FROM DEPENDENTE ORDER BY NOME_DEPENDENTE ASC;
 
-#15
+#15. Listar o nome dos funcionário e os nomes dos dependentes, para o funcionário 124.
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC WHERE D.ID_FUNC = 124;
 
-#16
+#16. Alterar a Identificacao do func 124 para 136
 UPDATE FUNC SET ID_FUNC = 136 WHERE ID_FUNC = 124;
 
-#17
+#17. Listar os funcs para ver se foi alterado.
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC WHERE D.ID_FUNC = 136;
 
-#18
+#18. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai”.
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F RIGHT JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC;
 
-#19
+#19. Altera a tabela Deppendente, incluindo a     FOREIGN KEY com restricoes de delete e update. Foi possível?
 ALTER TABLE DEPENDENTE ADD FOREIGN KEY (ID_FUNC) REFERENCES FUNC (ID_FUNC) ON DELETE RESTRICT ON UPDATE RESTRICT;
+#Não, pois há "filhos" sem "pais" na tabela, o que entra em divergência com as regras de RESTRICTS que estão sendo criadas
 
-#20
+#20. Excluir os dependentes: 124, 128, 135.
 DELETE FROM DEPENDENTE WHERE ID_FUNC=124 OR ID_FUNC=128 OR ID_FUNC=135;
 
-#21
+#21. Novamente, altera a tabela Deppendente, incluindo a FOREIGN KEY com restricoes de delete e update. Foi possível?
 ALTER TABLE DEPENDENTE ADD FOREIGN KEY (ID_FUNC) REFERENCES FUNC (ID_FUNC) ON DELETE RESTRICT ON UPDATE RESTRICT;
+#Sim, pois foram deletados os dados que não tinham "pais" para que estas RESTRICTS funcionassem
 
-#22
+#22. Excluir o funcin[ario 130, Raimundo Nonato. Foi possível?
 DELETE FROM FUNC WHERE ID_FUNC=130;
+#Não, pois o DELETE RESTRICT criado barra este comando
 
-#23
+#23. Alterar a identificacao do func 132 para 137. Foi possível?
 UPDATE FUNC SET ID_FUNC=127 WHERE ID_FUNC=132;
+#Não, pois o UPDATE RESTRICT criado barra este comando
 
-#24
+#24. Inserir dependente
 INSERT INTO DEPENDENTE VALUES (24,"Pafuncinho","2009-10-02",140);
 
-#25
+#25. Na tabela Dependente, excluir a chave estrangeira: coluna Id_Func.
 ALTER TABLE DEPENDENTE DROP ID_FUNC;
 
-#26
+#26. Excluir a tabela DEPENDENTE.
 DROP TABLE DEPENDENTE;
 
+#27. Criar novamente a tabela DEOENDENTE com o FOREIGN KEY e a cláusula> CASCADE.
+CREATE TABLE DEPENDENTE
+(ID_DEPENDENTE int UNSIGNED NOT NULL,
+NOME_DEPENDENTE varchar(40) NOT NULL,
+DATANASC DATE,
+ID_FUNC int UNSIGNED NOT NULL,
+PRIMARY KEY (ID_DEPENDENTE),
+FOREIGN KEY(ID_FUNC) REFERENCES FUNC(ID_FUNC) ON DELETE CASCADE ON UPDATE RESTRICT)
+ENGINE=InnoDB;
 
+#28. Inserir dados na tabela DEPENDENTE.
+INSERT INTO Dependente VALUES
+(13,"Raimunda","1977-04-04",130), 
+(14,"Raimundinha","2003-06-30",130),    
+(15,"Raimundinho","2005-02-02",130), 
+(16,"Raimundeto","2007-04-04",130), 
+(19,"Gumercindinha","2004-05-01",132), 
+(20,"Gumercindinho","2008-05-29",132), 
+(21,"Alipia","2007-02-11",123), 
+(22,"Epaminondinha","2007-03-13",123);
 
+#29. Excluir o funcin[ario 130, Raimundo Nonato.
+DELETE FROM FUNC WHERE ID_FUNC=130;
+SELECT * FROM FUNC;
 
+########### AULA 04 ###########
 
+#1. Criar o Banco de Dados UNIP.
+CREATE DATABASE UNIP;
 
+#2. Abrir o Banco de Dados UNIP
+USE UNIP;
 
+#3. Criar a Tabela ALUNO
+CREATE TABLE ALUNO
+(AlMatr  int  unsigned  not null, 
+AlNome  varChar(40), 
+AlCurso  varChar(30),
+AlDtNasc  date, 
+AlDescont  int(2),   
+PRIMARY KEY(AlMatr))
+ENGINE = InnoDB;
 
+#4. Criar a Tabela DISCIPLINA 
+CREATE TABLE DISCIPLINA
+(DisCod  int(2)  unsigned  not null,
+DisNome  varChar(30), 
+DisHoras  int(2),  
+DisPreco  decimal(7,2),
+PRIMARY KEY(DisCod))
+Engine= InnoDB;
 
+#5. Criar a tabela DISC_ALU
+CREATE TABLE DISC_ALU
+(DisCod  int(2)  unsigned  not null, 
+AlMatr  int  unsigned  not null, 
+Media   decimal(3,1),
+PRIMARY KEY(DisCod, AlMatr))
+ENGINE = InnoDB;
 
+#6. Inserir Dados na tabela Aluno.
+INSERT INTO ALUNO VALUES
+(123,"Jose Silva","Ciencias Computação","1980-10-10",10),
+(124,"Maria Silva","Direito","1981-05-05",15),
+(125,"Ana Silva","Ciencias Computação","1982-03-03",5), 
+(126,"Mario Silva","Ciencias Computação","1983-02-02",20),
+(127,"Joao Silva","Direito","1981-06-06",15),
+(128,"Ari Silva","Ciencias Computação","1982-08-08",10),
+(129,"Fabio Silva","Direito","1980-09-09",5),
+(130,"Eva Silva","Direito","1984-07-07",10);
+
+#7. Inserir Dados na tabela Disciplina. 
+INSERT INTO DISCIPLINA VALUES
+(11,"Eng Software",80,250.00),
+(14,"Ingles",40,100.00),
+(16,"Portugues",40,140.00),
+(19,"Matemática",40,220.00),
+(12,"Ling Pog Java",80,280.00),
+(15,"Banco de Dados",80,250.00);
+
+#8. Inserir Dados na tabela Disc_Alu.l
+INSERT INTO DISC_ALU VALUES
+(16, 124, 6.0), (19, 124, 8.5), (11, 130, 4.5), 
+(15, 127, 5.0),  (14, 130, 7.0),  (15, 129, 7.5),
+(12, 1127, 3.5), (16, 125, 6.0), (19, 127, 5.5),
+(11, 123, 9.0), (15, 130, 10.0), (16, 130, 10.0),
+(16, 127, 6.5), (12, 124, 8.5), (14, 128, 10.0); 
+
+#9. Listar os dados dos Alunos em ordem decrescente por Nome.
+SELECT * FROM ALUNO ORDER BY ALMATR DESC;
+
+#10. Listar o Nome da Diasciplina, Horas e Preço, calculando um NOVO_PRECO 20% maior que o atual. 
+SELECT DISNOME, DISHORAS, DISPRECO, ROUND((DISPRECO * 1.2),2) AS NOVO_PRECO FROM DISCIPLINA;
+
+#11. Listar a Matrícula, Nome do Aluno, Nome do Curso e da Disciplina em ordem ascendente por Nome do Aluno.
+SELECT A.ALMATR, ALNOME, ALCURSO, D.DISNOME FROM ALUNO A JOIN DISC_ALU DA ON A.ALMATR = DA.ALMATR JOIN DISCIPLINA D ON
+DA.DISCOD = D.DISCOD ORDER BY ALNOME ASC;
+
+#12. Listar a Matrícula, Nome do Aluno,  Nome do Curso e da Disciplina em ordem ascendente por Nome do Aluno e 
+#descendente por Nome da Disciplina.
+SELECT A.ALMATR, ALNOME, ALCURSO, D.DISNOME FROM ALUNO A JOIN DISC_ALU DA ON A.ALMATR = DA.ALMATR JOIN DISCIPLINA D ON
+DA.DISCOD = D.DISCOD ORDER BY ALNOME ASC, DISNOME DESC;
+
+#13. Listar todos alunos nascidos em 1981 e 1982.
+SELECT * FROM ALUNO WHERE YEAR(ALDTNASC) = 1981 OR YEAR(ALDTNASC) = 1982;
+
+#14. Listar o Nome do aluno, Nome da disciplina , Preço, Desconto e NOVO_PRECO, 
+#aplicando o desconto relativo ao aluno (tabela Aluno).
+SELECT A.ALNOME, D.DISNOME, DISPRECO, ROUND((DISPRECO - DISPRECO * (A.ALDESCONT/100)),2) AS NOVO_PRECO FROM ALUNO A JOIN DISC_ALU DA ON A.ALMATR = DA.ALMATR JOIN DISCIPLINA D ON
+DA.DISCOD = D.DISCOD;
+
+#15. Listar o Nome do aluno, Nome da disciplina Desconto, Ano de nascimento  
+#e Novo-Preço, aplicando o desconto relativo ao aluno (tabela Aluno), . somente para os alunos nascidos antes de 1982.
+SELECT ALNOME, DISNOME, ALDESCONT AS DESCONTO_PCT, ALDTNASC, ROUND((DISPRECO - DISPRECO * ALDESCONT/100),2)
+AS NOVO_PRECO FROM ALUNO A JOIN DISC_ALU DA ON A.ALMATR = DA.ALMATR JOIN DISCIPLINA D ON DA.DISCOD = D.DISCOD;
+
+#16. Criar a VISÃO AlunoDisciplina com os atributos matrÍcula, nome do aluno e curso que frequenta, 
+#nome da disciplina e média.
+CREATE VIEW AlunoDisciplina AS SELECT A.ALMATR, ALNOME, ALCURSO, D.DISNOME, DA.MEDIA
+FROM ALUNO A JOIN DISC_ALU DA ON A.ALMATR = DA.ALMATR JOIN DISCIPLINA D ON DA.DISCOD = D.DISCOD; 
+
+#17. Mostrar os dados da visão AlinoDisciplina.
+SELECT * FROM ALUNODISCIPLINA;
+
+#18. Mostrar os dados dos alunos que cursam as disciplinas Ingles  e Portugues (Usar a visão criada)
+SELECT * FROM ALUNODISCIPLINA WHERE DISNOME = "Ingles" OR DISNOME="Portugues";
+
+#19. #Criar o Banco de Dados: RedeHotel
+CREATE DATABASE RedeHotel;
+
+#20. Abrir o Banco de Dados RedeHotel
+USE RedeHotel;
+
+#21. Criar a tabela: Hotel
+CREATE TABLE Hotel
+(NOME  varChar(35)   NOT NULL,
+End       varChar(35), 
+Gerente varChar(40),
+DtINasc date,
+NrEmpreg int(2),
+PRIMARY KEY (Nome))
+ENGINE = InnoDB; 
+
+#22. Criar a tabelas: HOT_HOSP
+CREATE TABLE Hot_Hosp
+(NOME  varChar(40)   NOT NULL,
+CPF       varChar(15)  NOT NULL, 
+DtEntrada date,
+DtSaida     date,
+PrecoDiaria decimal(7,2),
+PRIMARY KEY (Nome, CPF))
+ENGINE = InnoDB; 
+
+# 23. Criar a tabelas: HOSPEDE
+CREATE TABLE HOSPEDE
+(Nome   varChar(40), END varChar(35),     
+RG    varChar(12),
+CPF  varChar(15)   NOT NULL,
+DtNasc  date, Fone  varChar(10),
+Profissao  varChar(25),
+Sexo  varChar(1), EstCivil  varChar(1),
+PRIMARY KEY (CPF)) 
+ENGINE = InnoDB; 
+
+#24. Entrar com dados na tabela: HOTEL 
+       INSERT INTO HOTEL VALUES
+("HOTEL PIRIRI SÃO PAULO","Rua X","José Silva","1950-10-13", 12),
+("HOTEL PIRIRI GUARUJA","Rua Y","Nair Souza","1982-01-01", 10),
+("HOTEL PIRIRI NATAL", "Rua Z", "Ari Santos","1987-05-01", 5),
+("HOTEL PIRIRI MACEIO", "Rua K", "Jorge Soares","1978-03-11", 15),
+("HOTEL PIRIRI CUIABA", "Rua M", "Aba Bastos","1992-09-04", 10),
+("HOTEL PIRIRI CURITIBA", "Rua N", "Maria Silva","1982-10-13", 13),
+("HOTEL PIRIRI BELEM", "Rua J", "Antonio Souza","1995-04-01", 11),
+("HOTEL PIRIRI LIMA", "Rua L", "Ruiz Solano","1982-11-05", 16),
+("HOTEL PIRIRI QUITO", "Rua Q", "José Syllan","1987-06-02", 10),
+("HOTEL PIRIRI CAMPINAS", "Rua W","Joao Santos","1995-11-10", 9);
+
+#25. Entrar com dados na tabela: HOSPEDE
+          INSERT INTO HOSPEDE VALUES
+   ("Mario Souza","Rua A","145.492.789","123.456.789-12",
+   "1972-12-10","1111 11 11","Engenheiro Civil","M","2"),
+   ("Joao Silva","Rua B","541.294.987","321.654.987-21",
+   "1958-01-30","2222 22 22","Analista Sistemas","M","2"),
+   ("Maria Soares","Rua C","258.369.147","741.852.936-11",
+   "1977-10-12","3333 33 33","Secretária","F","1"),
+   ("Magda Souza","Rua D","963.852.741","159.357.753-10",
+   "1968-01-21","4444 44 44","Delegada Feminina","F","2"),
+   ("Eva Braun","Ria E","777.444.333","999.111.555-07",
+   "1958-05-02","5555 55 55","Engenheiro Eletrica","F","2");
+   
+#26. Entrar com dados na tabela: HOT_HOSP 
+INSERT INTO HOT_HOSP VALUES
+("HOTEL PIRIRI GUARUJA", "321.654.987-21",
+"2007-12-30","2008-01-10",180.00),
+("HOTEL PIRIRI BELEM", "123.456.789-12",
+"2006-12-23","2007-01-06",140.00),
+("HOTEL PIRIRI NATAL", "321.654.987-21",
+"2008-07-01","2008-07-21",210.00),
+("HOTEL PIRIRI CAMPINAS", "123.456.789-12",
+"2007-06-28","2007-07-10",160.00),
+("HOTEL PIRIRI GUARUJA", "123.456.789-12",
+"2008-10-18","2008-10-24",170.00),
+("HOTEL PIRIRI SÃO PAULO", "741.852.936-11",
+"2009-01-01","2009-01-10",200.00);
+
+#27. Mostrar quem se hospedou no hotel: HOTEL PIRIRI NATAL e quando.
+SELECT H.NOME FROM HOSPEDE H JOIN HOT_HOSP HH ON H.CPF = HH.CPF WHERE HH.NOME = "HOTEL PIRIRI NATAL";
+
+#28. Mostrar quem utilizou o hotel no ano de 2008 e qual hotel.
+SELECT H.NOME, HH.NOME FROM HOSPEDE H JOIN HOT_HOSP HH ON H.CPF = HH.CPF WHERE YEAR(DTENTRADA);
+
+#29. Mostrar quem utilizou o hotel no ano de 2008 e qual hotel.
+#REPETIDO
+
+#30. Mostrar que hoteis e quando, o hospede Joao Silva utilizou e quais as diárias pagas.
+SELECT HH.NOME, DTENTRADA, DTSAIDA, PRECODIARIA, (DATEDIFF(DTSAIDA, DTENTRADA) * PRECODIARIA) AS SOMA_DIARIAS FROM HOSPEDE H JOIN HOT_HOSP HH ON H.CPF = HH.CPF WHERE
+H.CPF="321.654.987-21";
+
+#31. Mostrar qual o preço e PREÇO_ATUAL da diária do HOTEL PIRIRI SÃO PAULO, sabendo qie houve um aumento de 22%.
+SELECT ROUND((PRECODIARIA * 1.22),2) AS AUMENTO_22_PCT FROM HOT_HOSP WHERE NOME="HOTEL PIRIRI SÃO PAULO";
+
+#32. Mostrar quantas entradas houveram nos hoteis.
+SELECT COUNT(*) FROM HOT_HOSP;
+
+#33. Mostrar os nomes dos hospedes, nomes dos hotéis e datas de entrada de quem utilizou a rede de hoteis em Dezembro.
+SELECT H.NOME, HH.NOME, DTENTRADA FROM HOSPEDE H JOIN HOT_HOSP HH ON H.CPF = HH.CPF WHERE MONTH(DTENTRADA) = 12;
+
+#34. Mostrar os hospedes cujos nomes NÃO começam com a letra ‘E’.
+SELECT NOME FROM HOSPEDE WHERE NOME NOT LIKE "E%";
 
 ########### AULA 05 ###########
 
@@ -683,9 +907,11 @@ SELECT PROD_ID, PROD_NOME, VINHO_ID, VINHO_NOME FROM PRODUTOR P RIGHT JOIN VINHO
 
 ########### AULA 06 ###########
 
+#1. Criação do Banco de Dados
 CREATE DATABASE ESTOQUE;
 USE ESTOQUE;
 
+#2. Criação da tabela: Produtos
 CREATE TABLE PRODUTOS 
 (CodProd  int  unsigned not null,
 NomeProd varChar(35), 
@@ -693,26 +919,66 @@ CategoriaProd varChar(20),
 PrecoUnitProd decimal(7,2),
 Primary Key(CodProd)) Engine=InnoDB;
 
-Delimiter |
-CREATE PROCEDURE InsereProduto
-(cod int, nome varChar(35), Cat varChar(20),   
-preco decimal(7,2))
-Begin
+#3. Inserir dados na tabela: Produtos
 INSERT INTO PRODUTOS VALUES
-(cod, nome, cat, preco); 
-End
-|
-Delimiter ;
+(1022, "Camiseta", "Grande", 15.00),
+(1029, "Alcool Gel", "Unidade", 4.20),
+(1024, "Grampo Papel","Caixa", 9.85),
+(1036, "Cartucho Impress", "Unidade", 62.00),
+(1026, "Macacão", "Grande", 82.00),
+(1023, "Vassoura", "Unidade", 12.00);
 
+#4. Criar a procedure InsereProduto com os parâmetros: 
+#cod int, nome char(35), cat char(20) e  prec decimal(7,2) e os 
+#procedimentos para inserir um produto na tabela Produtos.
+DELIMITER |
+CREATE PROCEDURE InsereProduto
+(cod int, nome char(35), cat char(20), prec decimal(7,2))
+BEGIN
+INSERT INTO PRODUTOS VALUES (cod,nome,cat,prec);
+END
+|DELIMITER ;
 
-show procedure status;
+#5. Ver as procedures criadas e as características da procedure InsereProduto. 
+SHOW CREATE PROCEDURE INSEREPRODUTO;
 
-CALL InsereProduto(1025, "Rebimbola Piriri", "Unidade", 35.50);
-
+#6. Executar a procedure InsereProduto com (1025, "Rebimbola Piriri", "Unidade", 35.50)
+CALL INSEREPRODUTO(1025, "Rebimbola Piriri", "Unidade", 35.50);
 SELECT * FROM PRODUTOS;
 
-Delimiter |
-CREATE PROCEDURE ListaProduto (preco decimal(7,2))
-Begin
-SELECT codProd, nomeProd, precoUnitProd FROM PRODUTOS WHERE PRECOUNITPROD > PRECO;
-End | Delimiter ;
+#7. Crie a procedure: ListaProduto com os procedimentos que liste codigo, nome e preco unitário) dos produtos 
+#cujos preços unitários sejam maiores do que o preço informado em parâmetro.
+DELIMITER |
+CREATE PROCEDURE ListaProduto
+(preco decimal(7,2))
+BEGIN
+SELECT CodProd, NomeProd, PrecoUnitProd FROM PRODUTOS WHERE PrecoUnitProd > preco;
+END
+| DELIMITER ;
+
+#8. Ver as procedures criadas.
+SHOW PROCEDURE STATUS;
+
+#9. Executar a procedure ListaPreco com: 10,00 
+CALL ListaProduto(10.00);
+
+#10. Crie a procedure: AumentaPreco que aumente os preços unitários, 
+#no percentual informado por parâmetro, do produto, também informados por parâmetro.
+DELIMITER |
+CREATE PROCEDURE AumentaPreco
+(cod int, aumento decimal(7,2))
+BEGIN
+UPDATE PRODUTOS SET PrecoUnitProd = PrecoUnitProd + PrecoUnitProd * aumento/100 WHERE CodProd = cod;
+END
+| DELIMITER ;
+select * FROM PRODUTOS;
+
+#11. Executar a procedure AumentaPreco com: 1025, 30
+CALL AumentaPreco(1025,30);
+SELECT * FROM PRODUTOS;
+
+#12. Excluir a procedure InsereProduto. 
+DROP PROCEDURE InsereProduto;
+
+
+
