@@ -193,9 +193,149 @@ AND (SALFUNC + COMISFUNC) < 1200.00;
 UPDATE FUNC SET SALFUNC = SALFUNC * 1.1 WHERE CODDEPFUNC = 13 AND  (SALFUNC + COMISFUNC) < 1200.00;
 SELECT * FROM FUNC;
 
+#17. Listar o nome, o salario a comissão e o NOVO_SALARIO 
+#(salário + comissão) dos empregados do departamento de Vendas.
+SELECT NOMEFUNC, SALFUNC, COMISFUNC, (SALFUNC + COMISFUNC) AS NOVO_SALARIO FROM FUNC F JOIN DEPTO D ON
+F.CODDEPFUNC = D.CODDEP WHERE NOMEDEP = "Vendas";
 
+#18. Excluir todos funcionários do depto de Maeketing e que não sejam Analistas.
+DELETE F.* FROM FUNC F JOIN DEPTO D ON F.CODDEPFUNC = D.CODDEP WHERE NOMEDEP = "Marketing" AND
+FUNCAOFUNC <> "Analista";
+SELECT NOMEFUNC, SALFUNC, COMISFUNC AS NOVO_SALARIO FROM FUNC F JOIN DEPTO D ON
+F.CODDEPFUNC = D.CODDEP WHERE NOMEDEP = "Marketing";
+SELECT * FROM FUNC;
 
+########### AULA 06 ###########
 
+#Sem exercícios
+
+########### AULA 07 ###########
+
+#Sem exercícios
+
+########### AULA 08 ###########
+
+#1. Criar o Banco de Dados Funcionarios
+CREATE DATABASE FUNCIONARIOS;
+USE FUNCIONARIOS;
+
+#2. Criar a tabela Func
+CREATE TABLE Func
+(ID_FUNC int UNSIGNED NOT NULL,
+NOME_FUNC varChar(40)  NOT NULL ,
+SALARIO DECIMAL(7,2),
+DEPTO varChar(03),
+PRIMARY KEY(ID_FUNC)) ENGINE=InnoDB;
+
+#3. Inserir dados na tabela Func.
+INSERT INTO FUNC VALUES
+(5,"Jose Silva",1300.00,"INF"),(3,"Maria Santos",2400.00,"COM"), (1,"Nair Bello",4800.00,"ven"), (7,"                Carlos Souza",900.00,"pro"), 
+(9,"Marcio Bastos",6200.00,"FIN"), (2,"      João Maia",2010.00,"inf"),(4,"Nair Caju",1950.00,"com"), 
+(6,"Eva Brito",4480.00,"vem"), (10,"José das Couves",3290.00,"PES"), (8,"Vania Melo",725.10,"pes"),(11,"Joana Matos",848.50,"RH");
+
+SELECT * FROM FUNC;
+
+#4. Funções LOWER() e UPPER()
+SELECT LOWER(NOME_FUNC) AS MINUSCULO, UPPER(NOME_FUNC) AS MAIUSCULO FROM FUNC;
+
+/*#5.
+LTRIM para tirar espaços a esquerda
+LENGTH RETORNA TAMANHO
+SUBSTR Fatia a string
+CONCAT  concatena strings
+*/
+
+SELECT LTRIM(NOME_FUNC) AS NOME_ALINHADO, 
+		LENGTH(NOME_FUNC) AS TAMANHO,SUBSTR(NOME_FUNC, 2,5) AS PEDACO,
+        CONCAT(NOME_FUNC," ",DEPTO) AS NOME_FUNC_DEPTO FROM FUNC;
+        
+#6. INSTR Saber a posição da string
+SELECT NOME_FUNC AS NOME, INSTR(NOME_FUNC, "Caju") as POSICAO FROM FUNC;
+
+#Possível usar com WHERE pra buscar pelo nome
+SELECT nome_Func as Nome_Funcionario,
+salario as Salario FROM Func WHERE INSTR(nome_Func,"Couves") != 0;
+
+#7.
+/*
+ABS Valor absoluto (sempre positivo)
+MOD Resto da divisao
+PI valor de PI
+POW potencia
+ROUND arredondar
+SQRT raiz quadrada
+*/
+SELECT ABS(-1328), MOD(233,2), PI() as VALOR_PI, POW(3,4),SQRT(id_Func) 
+FROM Func WHERE Id_Func = 8;
+SELECT salario as Salario, ROUND(salario) as Salario_Arredondado FROM Func WHERE Id_Func = 8;
+
+#8
+/*
+AVG media
+COUNT quantidade de registros
+MAX valor maximo
+MIN valor minimo
+STD o desvio padrao
+STDDEV desvio padrao para Oracle
+SUM soma
+VARIANCE variancia
+*/
+
+/*
+CURDATE     Data atual
+CURTIME      Hora atual
+DATEDIFF     Diferença entre duas datas
+DAY                O dia de uma data
+HOUR            A hora de um atributo hora
+MIN                Os minutos de um atributo hora
+MONTH         O mês de uma data
+MONTHNAME  O nome do mês de uma data
+NOW              Data e hora atual
+SECOND       Os segundos de um atributo hora
+YEAR             O ano de uma data
+*/
+SELECT CURDATE(), CURTIME(), DATEDIFF(CURDATE(),"2020-01-01") AS DIFERENCA_DATAS;
+
+#FUNÇÕES
+
+#1. Criar a tabela Dependente
+CREATE TABLE Dependente
+(Id_Dep int UNSIGNED NOT NULL,
+Nome_Dep varChar(40)  NOT NULL ,
+Grau_Dep varChar(10),
+Data_Nasc Date,
+Id_Func_Dep int UNSIGNED NOT NULL,
+PRIMARY KEY(Id_Dep, Id_Func_Dep)) 
+ENGINE=InnoDB;
+
+#2. Inserir dados na tabela Dependente.
+INSERT INTO Dependente VALUES
+(1,"Maria Silva","Esposa","2008-09-26",5),
+(2,"Mariazinha","Filha","1997-05-02",5),  (3,"Zezinho","Filho","2010-01-15",5),
+(1,"Carlota Souza","Esposa","2011-06-20",7),
+(2,"Carlinhos","Filho","2015-04-01",7),
+(1,"João Matos","Marido","1985-12-05",11),
+(2,"Joaninho","Filho","2005-03-01",11), 
+(3,"Joaninha","Filha","2007-01-01",11),
+(4,"Matinha","Filha","2012-04-30",11);
+
+/*3. Considerando que a empresa gasta 200.00 reais por dependente, criar uma function, 
+chamada TotalGastoDep, que retorne o total de gasto da empresa para um determinado funcionário 
+(parâmetro id int).*/
+DELIMITER |
+CREATE FUNCTION GastoDep(id int)
+returns decimal(7,2) -- perceba que comparando com Java, declaramos o retorno depois do nome da função invés de antes
+-- e com a palavra returns
+BEGIN
+declare valorGasto decimal(7,2) default 0; -- temos que colocar a palavra declare para cada var com o tipo primitivo valor default
+	SELECT COUNT(*) * 200 into valorGasto FROM DEPENDENTE WHERE ID_FUNC_DEP=id; --  usar a palavrar into para atribuir o calculo a variavel
+    return valorGasto; -- declarar o returno da variavel
+END
+| DELIMITER ;
+
+SELECT GastoDep(11) as SOMA_DEPENDENTES;
+SELECT LTRIM(NOME_FUNC) AS NOME_FUNC, NOME_DEP, ID_FUNC_DEP, ID_DEP FROM FUNC F JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC_DEP
+ORDER BY ID_FUNC_DEP;
 
 
 

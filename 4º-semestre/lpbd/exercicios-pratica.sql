@@ -432,7 +432,7 @@ SELECT NOME_DEPENDENTE FROM DEPENDENTE WHERE ID_FUNC=128;
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON
 F.ID_FUNC = D.ID_FUNC;
 
-#12. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai".
+#12. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem "pai".
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F RIGHT JOIN DEPENDENTE D ON
 F.ID_FUNC = D.ID_FUNC;
 
@@ -452,7 +452,7 @@ UPDATE FUNC SET ID_FUNC = 136 WHERE ID_FUNC = 124;
 #17. Listar os funcs para ver se foi alterado.
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC WHERE D.ID_FUNC = 136;
 
-#18. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem “pai”.
+#18. Listar os nomes dos Funcionários  e seus dependentes, inclusive os dependentes sem "pai".
 SELECT NOME_FUNC, NOME_DEPENDENTE FROM FUNC F RIGHT JOIN DEPENDENTE D ON F.ID_FUNC = D.ID_FUNC;
 
 #19. Altera a tabela Deppendente, incluindo a     FOREIGN KEY com restricoes de delete e update. Foi possível?
@@ -979,6 +979,95 @@ SELECT * FROM PRODUTOS;
 
 #12. Excluir a procedure InsereProduto. 
 DROP PROCEDURE InsereProduto;
+
+########### AULA 07 ###########
+
+#1. Criar o Banco de Dados: Inventário
+CREATE DATABASE INVENTARIO;
+USE INVENTARIO;
+
+#2. Criar a tabela: Produto
+CREATE TABLE PRODUTOS 
+(CodProd  int  unsigned not null,
+NomeProd char(35), CategoriaProd char(20),
+PrecoUnitProd decimal(7,2),
+QuantEstoqProd int(2),
+Primary Key(CodProd)) Engine=InnoDB;
+
+#3. Inserir dados na tabela: Produtos
+INSERT INTO PRODUTOS VALUES
+(1022, "Camiseta", "Grande", 15.00,18),
+(1029, "Alcool Gel", "Unidade", 4.20,21),
+(1024, "Grampo Papel","Caixa", 9.85,28),
+(1036, "Cartucho Impress", "Unidade", 62.00,11),
+(1026, "Macacão", "Grande", 82.00,6),
+(1023, "Vassoura", "Unidade", 12.00,23);
+
+#4. Criar uma procedure com o nome de ListaExclui com os parâmetros: cod int e num int, que faça:
+DELIMITER |
+CREATE PROCEDURE ListaExclui
+(cod int, num int)
+BEGIN
+IF (cod = 1) THEN
+	SELECT * FROM PRODUTOS WHERE CODPROD = num;
+else if (cod = 2) then
+	DELETE FROM PRODUTOS WHERE CODPROD = num;
+    SELECT "Código", cod, "REGISTRO EXCLUÍDO COM SUCESSO" AS MENSAGEM;
+else
+	SELECT "Código", cod, "Código Inválido" AS MENSAGEM;
+END IF; 
+END IF;
+END
+| DELIMITER ;
+
+#5. Executar a Procedure ListaExclui com
+CALL ListaExclui(1, 1024);
+CALL ListaExclui(2, 1024);
+CALL ListaExclui(3, 1024);
+
+/*#6. Criar uma procedure com o nome de ProcGeral com os parâmetros: cod int, prod  int, nome char(35), 
+cat char(20), preco decimal(7,2), quant int(2), que faça:
+Se cod = 1: Incluir um produto;.
+Se cod = 2: Excluir o produto conforme o 
+parâmetro prod;
+Se cod = 3: Listar os dados de todos produtos; 
+Se cod = 4: Listar os dados do produto conforme o    
+parâmetro prod;
+Caso contrário: Emitir a mensagem 
+	"CÓDIGO INVÁLIDO".*/
+
+DELIMITER |
+CREATE PROCEDURE ProcGeral
+(cod int, prod int, nome char(35), cat char(20), preco decimal(7,2), quant int(2))
+BEGIN
+IF (cod = 1) THEN
+	INSERT INTO PRODUTOS VALUES (prod, nome, cat, preco, quant);
+elseif (cod = 2) then
+	DELETE FROM PRODUTOS WHERE CODPROD = prod;
+    SELECT "REGISTROS DELETADO COM SUCESSO" AS MENSAGEM;
+else if(cod = 3) then
+	SELECT * FROM PRODUTOS;
+else if(cod = 4) then
+	SELECT * FROM PRODUTOS WHERE CODPROD = prod;
+else
+	SELECT "Código inválido" AS MENSAGEM;
+end if;
+END IF;
+END IF;
+END
+| DELIMITER ;
+
+DROP PROCEDURE ProcGeral;
+
+#7. Executar a Procedure ProcGeral com
+CALL ProcGeral(1,1055,"Parafuseta","Unidade",54.20,41);
+CALL ProcGeral(2,1029,"","",0,0);
+CALL ProcGeral(3,"","","",0,0);
+CALL ProcGeral(4,1055,"","",0,0);               
+CALL ProcGeral(6,1055,"","",0,0);
+
+
+
 
 
 
