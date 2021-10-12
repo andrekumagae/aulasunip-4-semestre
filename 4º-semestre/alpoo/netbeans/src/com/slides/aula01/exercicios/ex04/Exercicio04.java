@@ -15,13 +15,25 @@ import javax.swing.JButton;
  */
 public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
 
-    static int numero1 = 0, numero2 = 0, igual, soma, subtracao, multiplicacao, divisao;
+    static double numero1 = 0, numero2 = 0, resultado = 0;
+    static String sinal = "";
 
     /**
      * Creates new form Exercicio04
      */
     public Exercicio04() {
         initComponents();
+        btn1.addActionListener(this);
+        btn2.addActionListener(this);
+        btn3.addActionListener(this);
+        btn4.addActionListener(this);
+        btn5.addActionListener(this);
+        btn6.addActionListener(this);
+        btn7.addActionListener(this);
+        btn8.addActionListener(this);
+        btn9.addActionListener(this);
+        btn0.addActionListener(this);
+        btnSoma.addActionListener(this);
     }
 
     /**
@@ -33,8 +45,10 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lblNumeros = new javax.swing.JLabel();
+        pnlResultados = new javax.swing.JPanel();
+        lblResultado = new javax.swing.JLabel();
+        pnlConta = new javax.swing.JPanel();
+        lblConta = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btn1 = new javax.swing.JButton();
         btn2 = new javax.swing.JButton();
@@ -55,16 +69,19 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculadora");
+        setBackground(new java.awt.Color(255, 204, 204));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlResultados.setBackground(new java.awt.Color(255, 204, 204));
+        pnlResultados.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblNumeros.setText("0");
-        jPanel1.add(lblNumeros);
+        lblResultado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        pnlResultados.add(lblResultado);
+
+        pnlConta.setBackground(new java.awt.Color(255, 204, 204));
+        pnlConta.add(lblConta);
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 4));
 
@@ -196,15 +213,21 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlResultados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlConta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlConta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,36 +235,59 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (lblConta.getText().length() == 10) {
+            return;
+        }
+        limpar();
+
         JButton btn = (JButton) e.getSource();
         String numero = btn.getText();
-        lblNumeros.setText(lblNumeros.getText() + numero);
+        lblConta.setText(lblConta.getText() + numero);
+
+        //TODO consertar clique nos operadores limpa label e erro de concatenação
+        if (btn == btnSoma) {
+            sinal = btn.getText();
+        }
+        System.out.println("sinal: " + sinal);
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        lblNumeros.setText("0");
+        lblConta.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnSomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSomaActionPerformed
-        soma = numero1;
-        numero2 = 0;
-        lblNumeros.setText("0");
+        numero1 = Double.parseDouble(lblConta.getText());
+//        JButton btn = (JButton) evt.getSource();
+//        sinal = btn.getText();
+        lblResultado.setText(lblConta.getText() + " + ");
+        lblConta.setText("");
     }//GEN-LAST:event_btnSomaActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
-        if (soma == numero1) {
-            igual = numero1 + numero2;
-        } else if (subtracao == numero1) {
-            igual = numero1 - numero2;
-        } else if (multiplicacao == numero1) {
-            igual = numero1 * numero2;
-        } else {
-            igual = numero1 / numero2;
+        numero2 = Double.parseDouble(lblConta.getText());
+        System.out.println(sinal);
+        switch (sinal) {
+            case "+":
+                resultado = numero1 + numero2;
+                break;
+            case "-":
+                resultado = numero1 - numero2;
+                break;
+            case "*":
+                resultado = numero1 * numero2;
+                break;
+            case "/":
+                resultado = numero1 / numero2;
+                break;
+            default:
+                break;
         }
-        lblNumeros.setText(Integer.toString(igual));
+        lblResultado.setText(Double.toString(numero1) + " " + sinal + Double.toString(numero2) + " = ");
+        lblConta.setText(Double.toString(resultado));
     }//GEN-LAST:event_btnIgualActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        lblNumeros.setText("2");
+        lblConta.setText("2");
         if (numero1 == 0) {
             numero1 = 2;
         } else {
@@ -250,7 +296,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        lblNumeros.setText("3");
+        lblConta.setText("3");
         if (numero1 == 0) {
             numero1 = 3;
         } else {
@@ -259,7 +305,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        lblNumeros.setText("4");
+        lblConta.setText("4");
         if (numero1 == 0) {
             numero1 = 4;
         } else {
@@ -268,7 +314,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        lblNumeros.setText("5");
+        lblConta.setText("5");
         if (numero1 == 0) {
             numero1 = 5;
         } else {
@@ -277,7 +323,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        lblNumeros.setText("6");
+        lblConta.setText("6");
         if (numero1 == 0) {
             numero1 = 6;
         } else {
@@ -286,7 +332,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        lblNumeros.setText("7");
+        lblConta.setText("7");
         if (numero1 == 0) {
             numero1 = 7;
         } else {
@@ -295,7 +341,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        lblNumeros.setText("8");
+        lblConta.setText("8");
         if (numero1 == 0) {
             numero1 = 8;
         } else {
@@ -304,7 +350,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        lblNumeros.setText("9");
+        lblConta.setText("9");
         if (numero1 == 0) {
             numero1 = 9;
         } else {
@@ -313,7 +359,7 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        lblNumeros.setText("0");
+        lblConta.setText("0");
         if (numero1 == 0) {
             numero1 = 0;
         } else {
@@ -322,22 +368,29 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnSubtraiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtraiActionPerformed
-        subtracao = numero1;
+        resultado = numero1;
         numero2 = 0;
-        lblNumeros.setText("0");
+        lblConta.setText("0");
     }//GEN-LAST:event_btnSubtraiActionPerformed
 
     private void btnMultiplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicaActionPerformed
-        multiplicacao = numero1;
+        resultado = numero1;
         numero2 = 0;
-        lblNumeros.setText("0");
+        lblConta.setText("0");
     }//GEN-LAST:event_btnMultiplicaActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
-        divisao = numero1;
+        resultado = numero1;
         numero2 = 0;
-        lblNumeros.setText("0");
+        lblConta.setText("0");
     }//GEN-LAST:event_btnDivideActionPerformed
+
+    private void limpar() {
+        if (resultado != 0) {
+            lblResultado.setText("");
+            lblConta.setText("");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -391,8 +444,10 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton btnMultiplica;
     private javax.swing.JButton btnSoma;
     private javax.swing.JButton btnSubtrai;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblNumeros;
+    private javax.swing.JLabel lblConta;
+    private javax.swing.JLabel lblResultado;
+    private javax.swing.JPanel pnlConta;
+    private javax.swing.JPanel pnlResultados;
     // End of variables declaration//GEN-END:variables
 }
