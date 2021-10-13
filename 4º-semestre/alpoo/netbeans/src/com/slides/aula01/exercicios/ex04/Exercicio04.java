@@ -34,6 +34,9 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
         btn9.addActionListener(this);
         btn0.addActionListener(this);
         btnSoma.addActionListener(this);
+        btnSubtrai.addActionListener(this);
+        btnMultiplica.addActionListener(this);
+        btnDivide.addActionListener(this);
     }
 
     /**
@@ -90,75 +93,30 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
         jPanel2.add(btn1);
 
         btn2.setText("2");
-        btn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn2);
 
         btn3.setText("3");
-        btn3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn3);
 
         btn4.setText("4");
-        btn4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn4);
 
         btn5.setText("5");
-        btn5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn5ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn5);
 
         btn6.setText("6");
-        btn6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn6);
 
         btn7.setText("7");
-        btn7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn7ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn7);
 
         btn8.setText("8");
-        btn8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn8);
 
         btn9.setText("9");
-        btn9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn9);
 
         btn0.setText("0");
-        btn0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn0ActionPerformed(evt);
-            }
-        });
         jPanel2.add(btn0);
 
         btnSoma.setText("+");
@@ -239,26 +197,27 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
             return;
         }
         limpar();
+        System.out.println("sinal: " + sinal);
+        System.out.println("var: " + numero1);
+        System.out.println("label: " + lblConta.getText());
 
         JButton btn = (JButton) e.getSource();
-        String numero = btn.getText();
-        lblConta.setText(lblConta.getText() + numero);
 
-        //TODO consertar clique nos operadores limpa label e erro de concatenação
-        if (btn == btnSoma) {
+        if (btn == btnSoma || btn == btnSubtrai || btn == btnMultiplica || btn == btnDivide) {
             sinal = btn.getText();
+        } else {
+            String numero = btn.getText();
+            lblConta.setText(lblConta.getText() + numero);
         }
-        System.out.println("sinal: " + sinal);
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         lblConta.setText("");
+        lblResultado.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnSomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSomaActionPerformed
         numero1 = Double.parseDouble(lblConta.getText());
-//        JButton btn = (JButton) evt.getSource();
-//        sinal = btn.getText();
         lblResultado.setText(lblConta.getText() + " + ");
         lblConta.setText("");
     }//GEN-LAST:event_btnSomaActionPerformed
@@ -282,113 +241,35 @@ public class Exercicio04 extends javax.swing.JFrame implements ActionListener {
             default:
                 break;
         }
-        lblResultado.setText(Double.toString(numero1) + " " + sinal + Double.toString(numero2) + " = ");
+        lblResultado.setText(Double.toString(numero1) + " " + sinal + " " + Double.toString(numero2) + " = ");
         lblConta.setText(Double.toString(resultado));
     }//GEN-LAST:event_btnIgualActionPerformed
 
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        lblConta.setText("2");
-        if (numero1 == 0) {
-            numero1 = 2;
-        } else {
-            numero2 = 2;
-        }
-    }//GEN-LAST:event_btn2ActionPerformed
-
-    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        lblConta.setText("3");
-        if (numero1 == 0) {
-            numero1 = 3;
-        } else {
-            numero2 = 3;
-        }
-    }//GEN-LAST:event_btn3ActionPerformed
-
-    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        lblConta.setText("4");
-        if (numero1 == 0) {
-            numero1 = 4;
-        } else {
-            numero2 = 4;
-        }
-    }//GEN-LAST:event_btn4ActionPerformed
-
-    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        lblConta.setText("5");
-        if (numero1 == 0) {
-            numero1 = 5;
-        } else {
-            numero2 = 5;
-        }
-    }//GEN-LAST:event_btn5ActionPerformed
-
-    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        lblConta.setText("6");
-        if (numero1 == 0) {
-            numero1 = 6;
-        } else {
-            numero2 = 6;
-        }
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        lblConta.setText("7");
-        if (numero1 == 0) {
-            numero1 = 7;
-        } else {
-            numero2 = 7;
-        }
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        lblConta.setText("8");
-        if (numero1 == 0) {
-            numero1 = 8;
-        } else {
-            numero2 = 8;
-        }
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        lblConta.setText("9");
-        if (numero1 == 0) {
-            numero1 = 9;
-        } else {
-            numero2 = 9;
-        }
-    }//GEN-LAST:event_btn9ActionPerformed
-
-    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        lblConta.setText("0");
-        if (numero1 == 0) {
-            numero1 = 0;
-        } else {
-            numero2 = 0;
-        }
-    }//GEN-LAST:event_btn0ActionPerformed
-
     private void btnSubtraiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtraiActionPerformed
-        resultado = numero1;
-        numero2 = 0;
-        lblConta.setText("0");
+        numero1 = Double.parseDouble(lblConta.getText());
+        lblResultado.setText(lblConta.getText() + " - ");
+        lblConta.setText("");
     }//GEN-LAST:event_btnSubtraiActionPerformed
 
     private void btnMultiplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicaActionPerformed
-        resultado = numero1;
-        numero2 = 0;
-        lblConta.setText("0");
+        numero1 = Double.parseDouble(lblConta.getText());
+        lblResultado.setText(lblConta.getText() + " * ");
+        lblConta.setText("");
     }//GEN-LAST:event_btnMultiplicaActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
-        resultado = numero1;
-        numero2 = 0;
-        lblConta.setText("0");
+        numero1 = Double.parseDouble(lblConta.getText());
+        lblResultado.setText(lblConta.getText() + " / ");
+        lblConta.setText("");
     }//GEN-LAST:event_btnDivideActionPerformed
 
     private void limpar() {
         if (resultado != 0) {
+//            numero1 = Double.parseDouble(lblConta.getText());
             lblResultado.setText("");
-            lblConta.setText("");
+            resultado = 0;
+//            lblConta.setText("");
+//            sinal = "";
         }
     }
 
