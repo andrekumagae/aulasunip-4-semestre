@@ -15,7 +15,7 @@ SHOW DATABASES;
 #Criação da tabela Aluno.
 CREATE  TABLE  Alunos(
 Matricula int(2) unsigned not null,
-Nome varChar(40),
+Nome varChar(40),
 Sexo varChar(01),
 Endereco varChar(13),
 PRIMARY KEY(Matricula)); 
@@ -1066,7 +1066,58 @@ CALL ProcGeral(3,"","","",0,0);
 CALL ProcGeral(4,1055,"","",0,0);               
 CALL ProcGeral(6,1055,"","",0,0);
 
+########### AULA 09 ###########
+CREATE DATABASE EMPREGADOS;
+USE EMPREGADOS;
 
+CREATE TABLE Func
+(ID_FUNC int UNSIGNED NOT NULL,
+NOME_FUNC varChar(40)  NOT NULL ,
+SALARIO DECIMAL(7,2),
+DEPTO varChar(03),
+PRIMARY KEY(ID_FUNC)) ENGINE=InnoDB;
+
+INSERT INTO FUNC VALUES
+(5,"Jose Silva",1300.00,"INF"),(3,"Maria Santos",2400.00,"COM"), (1,"Nair Bello",4800.00,"ven"), (7,"                Carlos Souza",900.00,"pro"), 
+(9,"Marcio Bastos",6200.00,"FIN"), (2,"      João Maia",2010.00,"inf"),(4,"Nair Caju",1950.00,"com"), 
+(6,"Eva Brito",4480.00,"vem"), (10,"José das Couves",3290.00,"PES"), (8,"Vania Melo",725.10,"pes"),(11,"Joana Matos",848.50,"RH");
+
+select * from func;
+
+CREATE TABLE Dependente
+(Id_Dep int UNSIGNED NOT NULL,
+Nome_Dep varChar(40)  NOT NULL ,
+Grau_Dep varChar(10),
+Data_Nasc Date,
+Id_Func_Dep int UNSIGNED NOT NULL,
+PRIMARY KEY(Id_Dep, Id_Func_Dep)) 
+ENGINE=InnoDB;
+
+INSERT INTO Dependente VALUES
+(1,"Maria Silva","Esposa","2008-09-26",5),
+(2,"Mariazinha","Filha","1997-05-02",5),  (3,"Zezinho","Filho","2010-01-15",5),
+(1,"Carlota Souza","Esposa","2011-06-20",7),
+(2,"Carlinhos","Filho","2015-04-01",75),
+(1,"João Matos","Marido","1985-12-05",11),
+(2,"Joaninho","Filho","2005-03-01",11), 
+(3,"Joaninha","Filha","2007-01-01",11),
+(4,"Matinha","Filha","2012-04-30",11);
+
+DELIMITER |
+CREATE FUNCTION NovoSalario(idref int, aumento decimal(7,2)) returns decimal(7,2)
+BEGIN
+declare salnovo decimal default 0.00;
+select salario into salnovo from func where id_func = idref;
+set salnovo = salnovo + (salnovo * aumento/100);
+return salnovo;
+END
+| DELIMITER ;
+
+drop function NovoSalario;
+
+select NovoSalario(5, 20) as NOVO_SALARIO;
+select NovoSalario(11, 10) as NOVO_SALARIO;
+select NovoSalario(6, 15.50) as NOVO_SALARIO;
 
 
 
