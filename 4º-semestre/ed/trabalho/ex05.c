@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
 
 int fibonacci(int num)
 {
@@ -10,7 +12,7 @@ int fibonacci(int num)
 int main()
 {
     int i;
-    //clrscr();
+   system("cls");
     for (i = 0; i < 5; i++)
         printf("%d ", fibonacci(i + 1));
     getch();
