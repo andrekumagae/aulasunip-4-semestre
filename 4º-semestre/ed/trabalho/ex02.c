@@ -1,6 +1,6 @@
 #include <stdio.h> #include<conio.h> #include<stdlib.h>
 
-void main(void)
+void main()
 {
     int i = 123;
     printf("\nprintf1 %x", i);
